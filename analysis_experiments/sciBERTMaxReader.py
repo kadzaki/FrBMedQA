@@ -107,9 +107,7 @@ class SciBertReaderMax(nn.Module):
             entity_texts.append(list())
             nextItem = []
             for j in range(len(ctx_tok[i])):
-                #if ctx_tok[i][j] == '@':
                 if ctx_tok[i][j] == '@entity':
-                    #if ctx_tok[i][j+1] == 'entity':
                     entity_indices[-1].append(j)
                     nextItem = re.findall(r'^\D*(\d+)', ctx_tok[i][j+1])
                     nextNextItem = ''
@@ -191,7 +189,7 @@ class SciBertReaderMax(nn.Module):
                 del entity_outs[ent]
             else:
                 entity_outs[ent] = torch.max(torch.cat(entity_outs[ent]))
-        #print(entity_texts)
+
         return torch.stack(list(entity_outs.values())), entity_outs.keys(), preds
 
     def predict(self, context, question, entity_list, ignore_big=True):
